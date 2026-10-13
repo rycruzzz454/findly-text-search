@@ -1,0 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root { font-family: 'DM Sans', Arial, sans-serif; color: #1d2938; background: #f7f9fb; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+button,textarea { font: inherit; }
+button { cursor: pointer; }
