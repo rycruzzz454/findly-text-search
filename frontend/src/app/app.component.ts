@@ -70,7 +70,7 @@ export class AppComponent {
     this.searching = true;
 
     this.http.post<SearchResponse>(
-      'http://localhost:3000/api/search',
+      '/api/search',
       {
         input: this.input,
         query: this.query,
