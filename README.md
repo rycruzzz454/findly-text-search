@@ -196,14 +196,12 @@ findly-text-search/
 │   ├── search.py
 │   ├── test_search.py
 │   └── requirements.txt
-├── backend/
-│   └── [Legacy Express implementation]
-├── scripts/
+├── Dockerfile
+├── .dockerignore
 ├── README.md
 └── .gitignore
 ```
 
-The Python/FastAPI implementation is the intended backend. The previous Express implementation is temporarily retained as a fallback during migration.
 
 ## Potential Improvements
 
