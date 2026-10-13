@@ -1,41 +1,189 @@
+
 <div class="page-shell">
   <header class="topbar">
-    <div class="brand"><span class="brand-icon">⌕</span><span>findly<span class="brand-dot">.</span></span></div>
+    <div class="brand">
+      <span class="brand-icon">⌕</span>
+      <span>findly<span class="brand-dot">.</span></span>
+    </div>
     <span class="topbar-tag">TEXT INTELLIGENCE</span>
   </header>
+
   <main>
-    <div class="intro"><span class="eyebrow"><span class="eyebrow-line"></span> A SMARTER WAY TO SEARCH</span>
+    <div class="intro">
+      <span class="eyebrow">
+        <span class="eyebrow-line"></span>
+        A SMARTER WAY TO SEARCH
+      </span>
       <h1>Find anything <span>in your text.</span></h1>
-      <p>Paste your content, enter a search term, and instantly discover every match — with exact positions and highlighted results.</p>
+      <p>
+        Paste your content, enter a search term, and instantly discover
+        every match — with exact positions and highlighted results.
+      </p>
     </div>
+
     <div class="workspace">
       <section class="panel editor-panel" aria-labelledby="search-heading">
-        <div class="panel-head"><div><span class="step">01 / INPUT</span><h2 id="search-heading">Search your content</h2></div><button type="button" class="text-button" (click)="loadExample()">↻ Load example</button></div>
-        <div class="field"><div class="field-label"><label for="input-text">Your text</label><span>{{ input.length | number }} characters</span></div>
-          <textarea id="input-text" rows="9" [(ngModel)]="input" (ngModelChange)="clearResults()" placeholder="Paste or type your text here..." spellcheck="false"></textarea></div>
-        <div class="field"><div class="field-label"><label for="query-text">Search term</label><span>Word or phrase</span></div>
-          <textarea id="query-text" class="query-area" rows="2" [(ngModel)]="query" (ngModelChange)="clearResults()" placeholder="What are you looking for?" spellcheck="false"></textarea></div>
-        <label class="toggle-row"><input type="checkbox" [(ngModel)]="caseSensitive" (ngModelChange)="clearResults()"/><span>Case-sensitive matching</span></label>
-        <div class="form-actions"><button type="button" class="clear-button" (click)="clearAll()">Clear all</button>
-          <button type="button" class="search-button" [disabled]="searching" (click)="runSearch()"><span class="search-symbol">⌕</span>{{ searching ? 'Searching...' : 'Find matches' }} <span class="arrow">→</span></button></div>
-        @if (error) { <p class="error" role="alert">{{ error }}</p> }
+        <div class="panel-head">
+          <div>
+            <span class="step">01 / INPUT</span>
+            <h2 id="search-heading">Search your content</h2>
+          </div>
+          <button type="button" class="text-button" (click)="loadExample()">
+            ↻ Load example
+          </button>
+        </div>
+
+        <div class="field">
+          <div class="field-label">
+            <label for="input-text">Your text</label>
+            <span>{{ input.length | number }} characters</span>
+          </div>
+          <textarea
+            id="input-text"
+            rows="9"
+            [(ngModel)]="input"
+            (ngModelChange)="clearResults()"
+            placeholder="Paste or type your text here..."
+            spellcheck="false"
+          ></textarea>
+        </div>
+
+        <div class="field">
+          <div class="field-label">
+            <label for="query-text">Search term</label>
+            <span>Word or phrase</span>
+          </div>
+          <textarea
+            id="query-text"
+            class="query-area"
+            rows="2"
+            [(ngModel)]="query"
+            (ngModelChange)="clearResults()"
+            placeholder="What are you looking for?"
+            spellcheck="false"
+          ></textarea>
+        </div>
+
+        <label class="toggle-row">
+          <input
+            type="checkbox"
+            [(ngModel)]="caseSensitive"
+            (ngModelChange)="clearResults()"
+          />
+          <span>Case-sensitive matching</span>
+        </label>
+
+        <div class="form-actions">
+          <button type="button" class="clear-button" (click)="clearAll()">
+            Clear all
+          </button>
+          <button
+            type="button"
+            class="search-button"
+            [disabled]="searching"
+            (click)="runSearch()"
+          >
+            <span class="search-symbol">⌕</span>
+            {{ searching ? 'Searching...' : 'Find matches' }}
+            <span class="arrow">→</span>
+          </button>
+        </div>
+
+        @if (error) {
+          <p class="error" role="alert">{{ error }}</p>
+        }
       </section>
+
       <section class="panel results-panel" aria-labelledby="results-heading">
-        <div class="panel-head"><div><span class="step">02 / OUTPUT</span><h2 id="results-heading">Search results</h2></div><span class="result-state" [class.live]="searched">{{ searched ? 'COMPLETE' : 'AWAITING SEARCH' }}</span></div>
+        <div class="panel-head">
+          <div>
+            <span class="step">02 / OUTPUT</span>
+            <h2 id="results-heading">Search results</h2>
+          </div>
+          <span class="result-state" [class.live]="searched">
+            {{ searched ? 'COMPLETE' : 'AWAITING SEARCH' }}
+          </span>
+        </div>
+
         @if (!searched) {
-          <div class="empty-state"><div class="empty-glyph">⌕</div><h3>Ready when you are.</h3><p>Your highlighted matches and their positions will appear here.</p></div>
+          <div class="empty-state">
+            <div class="empty-glyph">⌕</div>
+            <h3>Ready when you are.</h3>
+            <p>Your highlighted matches and their positions will appear here.</p>
+          </div>
         } @else {
-          <div class="result-count"><span class="count-number">{{ results.totalHits }}</span><div><strong>{{ results.totalHits === 1 ? 'match found' : 'matches found' }}</strong><span>in your text</span></div></div>
+          <div class="result-count">
+            <span class="count-number">{{ results.totalHits }}</span>
+            <div>
+              <strong>
+                {{ results.totalHits === 1 ? 'match found' : 'matches found' }}
+              </strong>
+              <span>in your text</span>
+            </div>
+          </div>
+
           <div class="result-label">HIGHLIGHTED PREVIEW</div>
-          <div class="highlight-preview" aria-label="Search matches highlighted in source text">@for (segment of segments; track $index) {@if (segment.highlight) {<mark>{{ segment.text }}</mark>} @else {<span>{{ segment.text }}</span>}}</div>
+
+          <div
+            class="highlight-preview"
+            aria-label="Search matches highlighted in source text"
+          >
+            @for (segment of segments; track $index) {
+              @if (segment.highlight) {
+                <mark>{{ segment.text }}</mark>
+              } @else {
+                <span>{{ segment.text }}</span>
+              }
+            }
+          </div>
+
           @if (results.totalHits > 0) {
-            <div class="match-header"><span>OCCURRENCE</span><span>LOCATION</span></div>
-            <div class="match-list">@for (hit of results.hits; track $index) {<div class="match-row"><span><span class="match-index">{{ ($index + 1).toString().padStart(2, '0') }}</span> <strong>{{ hit.text }}</strong></span><span class="location">Line {{ hit.line }}, Col {{ hit.column }}</span></div>}</div>
-          } @else { <p class="no-results">No matches found. Try a different search term.</p> }
-          @if (results.truncated) { <p class="warning">Results were limited to the first 10,000 matches.</p> }
+            <div class="match-header">
+              <span>OCCURRENCE</span>
+              <span>LOCATION</span>
+            </div>
+
+            <div class="match-list">
+              @for (hit of results.hits; track $index) {
+                <div class="match-row">
+                  <span>
+                    <span class="match-index">
+                      {{ ($index + 1).toString().padStart(2, '0') }}
+                    </span>
+                    <strong>{{ hit.text }}</strong>
+                  </span>
+                  <span class="location">
+                    Line {{ hit.line }}, Col {{ hit.column }}
+                  </span>
+                </div>
+              }
+            </div>
+          } @else {
+            <p class="no-results">
+              No matches found. Try a different search term.
+            </p>
+          }
+
+          @if (results.truncated) {
+            <p class="warning">
+              Results were limited to the first 10,000 matches.
+            </p>
+          }
         }
       </section>
     </div>
-    <footer><span>PRECISION IN EVERY SEARCH</span><span>Built with Angular + Node.js</span></footer>
+
+    <footer>
+      <span>Built with Angular + Node.js</span>
+
+      <a
+        href="https://github.com/rycruzzz454/findly-text-search"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="color: inherit; text-decoration: none;"
+      >
+        View Source Code ↗
+      </a>
+    </footer>
   </main>
 </div>
