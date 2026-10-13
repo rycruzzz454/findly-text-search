@@ -10,6 +10,25 @@ dist/
 **/dist/
 out-tsc/
 
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache and compiled files
+__pycache__/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+**/.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Python packaging
+*.egg-info/
+build/
+.eggs/
+
 # Environment variables and secrets
 .env
 .env.local
@@ -20,6 +39,9 @@ out-tsc/
 # Test and coverage output
 coverage/
 **/coverage/
+htmlcov/
+.coverage
+.coverage.*
 
 # Logs
 *.log
